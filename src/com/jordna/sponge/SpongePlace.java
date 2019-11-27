@@ -20,14 +20,13 @@ public class SpongePlace implements Listener
 		this.main = ins;
 	}
 	
-	List<Block> blockList = new ArrayList<Block>();
 	
 	@EventHandler
 	public void onPlace(BlockPlaceEvent e)
 	{
 		if (e.getBlock().getType() == Material.SPONGE)
 		{
-			surveyArea(e.getBlock().getLocation());
+			List<Block> blockList = surveyArea(e.getBlock().getLocation());
 			e.getBlock().getLocation().getBlock().setType(Material.SPONGE);
 			Bukkit.getScheduler().scheduleSyncDelayedTask(main, new Runnable() 
 			{
@@ -51,9 +50,9 @@ public class SpongePlace implements Listener
 		}
 	}
 	
-	private void surveyArea(Location center)
+	private List<Block> surveyArea(Location center)
 	{
-		blockList.clear();
+		List<Block> blockList = new ArrayList<Block>();
 		for (int x = center.getBlockX()-7; x <= center.getBlockX()+7; x++)
 		{
 			for (int y = center.getBlockY()-7; y <= center.getBlockY()+7; y++)
@@ -67,6 +66,7 @@ public class SpongePlace implements Listener
 				}	
 			}	
 		}
+		return blockList;
 	}
 	
 }
